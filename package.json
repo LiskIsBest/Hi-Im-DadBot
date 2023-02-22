@@ -4,6 +4,10 @@
   "description": "Discord bot to say \"hi im dad\"",
   "main": "src/index.js",
   "scripts": {
+    "start": "node src/index.js",
+    "dev": "nodemon src/index.js",
+    "reg-test": "node src/deploy-to-test.js",
+    "reg-global": "node src/deploy-to-global.js",
     "test": "echo \"Error: no test specified\" && exit 1"
   },
   "repository": {
@@ -27,6 +31,7 @@
     "dotenv": "^16.0.3"
   },
   "devDependencies": {
-    "eslint": "^8.34.0"
+    "eslint": "^8.34.0",
+    "nodemon": "^2.0.20"
   }
 }
