@@ -6,8 +6,7 @@
   "scripts": {
     "start": "node src/index.js",
     "dev": "nodemon src/index.js",
-    "reg-test": "node src/deploy-to-test.js",
-    "reg-global": "node src/deploy-to-global.js",
+    "reg": "node src/deploy-commands.js",
     "test": "echo \"Error: no test specified\" && exit 1"
   },
   "repository": {
@@ -27,8 +26,17 @@
   },
   "homepage": "https://github.com/LiskIsBest/HiImDadBot#readme",
   "dependencies": {
+    "@discordjs/opus": "^0.8.0",
+    "@discordjs/voice": "^0.14.0",
+    "@google-cloud/speech": "^5.3.1",
+    "discord-speech-recognition": "^3.2.0",
+    "discord-tts": "^1.2.2",
     "discord.js": "^14.7.1",
-    "dotenv": "^16.0.3"
+    "dotenv": "^16.0.3",
+    "ffmpeg": "^0.0.4",
+    "ffmpeg-static": "^5.1.0",
+    "libsodium-wrappers": "^0.7.11",
+    "opusscript": "^0.0.8"
   },
   "devDependencies": {
     "eslint": "^8.34.0",
