@@ -2,7 +2,7 @@ const fs = require("node:fs");
 const path = require("node:path");
 const { Client, GatewayIntentBits, Collection, messageLink } = require("discord.js");
 const { addSpeechEvent } = require("discord-speech-recognition");
-require("dotenv").config(); // process.TOKEN
+require("dotenv").config(); // process.env.TOKEN
 
 const client = new Client({
   intents: [
