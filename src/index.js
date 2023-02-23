@@ -1,6 +1,7 @@
 const fs = require("node:fs");
 const path = require("node:path");
-const { Client, Events, GatewayIntentBits, Collection } = require("discord.js");
+const { Client, GatewayIntentBits, Collection, messageLink } = require("discord.js");
+const { addSpeechEvent } = require("discord-speech-recognition");
 require("dotenv").config(); // process.TOKEN
 
 const client = new Client({
@@ -9,8 +10,10 @@ const client = new Client({
     GatewayIntentBits.GuildMessages,
     GatewayIntentBits.MessageContent,
     GatewayIntentBits.GuildMembers,
+    GatewayIntentBits.GuildVoiceStates,
   ],
 });
+addSpeechEvent(client)
 
 client.commands = new Collection();
 
@@ -32,25 +35,19 @@ for (const file of commandFiles) {
   }
 }
 
-client.once(Events.ClientReady, (ctx) => {
-  console.log(`Ready! Logged in as ${ctx.user.tag}`);
-});
+const eventsPath = path.join(__dirname, "events");
+const eventFiles = fs
+  .readdirSync(eventsPath)
+  .filter((file) => file.endsWith(".js"));
 
-client.on(Events.InteractionCreate, async interaction => {
-  if (!interaction.isChatInputCommand()) return;
-  
-  const command = interaction.client.commands.get(interaction.commandName);
-
-  if (!command) {
-    console.error(`No command matching ${interaction.commandName} was found.`);
+for (const file of eventFiles) {
+  const filePath = path.join(eventsPath, file);
+  const event = require(filePath);
+  if (event.once) {
+    client.once(event.name, (...args) => event.execute(...args));
+  } else {
+    client.on(event.name, (...args) => event.execute(...args));
   }
-
-  try{
-    await command.execute(interaction);
-  } catch(error) {
-    console.error(error);
-    await interaction.reply({content: "There was an error while executing this command!", ephemeral: true})
-  }
-});
+}
 
 client.login(process.env.TOKEN);
