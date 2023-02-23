@@ -17,6 +17,7 @@ addSpeechEvent(client)
 
 client.commands = new Collection();
 
+// generate valid commands from the commands dir
 const commandsPath = path.join(__dirname, "commands");
 const commandFiles = fs
   .readdirSync(commandsPath)
@@ -35,6 +36,7 @@ for (const file of commandFiles) {
   }
 }
 
+// generate valid eventss from the eventss dir
 const eventsPath = path.join(__dirname, "events");
 const eventFiles = fs
   .readdirSync(eventsPath)
