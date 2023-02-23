@@ -1,5 +1,5 @@
 const { SlashCommandBuilder} = require("discord.js");
-const { joinVoiceChannel } = require("@discordjs/voice");
+const { joinVoiceChannel, getVoiceConnection } = require("@discordjs/voice");
 
 module.exports = {
   data: new SlashCommandBuilder()
@@ -8,15 +8,7 @@ module.exports = {
     async execute(interaction){
       await interaction.reply({ content: "Leaving voice chat!", ephemeral: true });
       const voiceChannel = interaction.member?.voice.channel;
-
-      const voiceConnection = joinVoiceChannel({
-        channelId: voiceChannel.id,
-        guildId: interaction.guildId,
-        adapterCreator: interaction.guild.voiceAdapterCreator,
-        selfDeaf: false,
-        selfMute: false,
-      });
-
+      const voiceConnection = getVoiceConnection(interaction.guildId)
       voiceConnection.destroy()
     }
 }
