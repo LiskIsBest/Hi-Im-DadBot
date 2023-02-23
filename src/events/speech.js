@@ -8,8 +8,7 @@ module.exports = {
   name: "speech",
   execute(msg) {
     if (!msg.content) return;
-    console.log(msg.content);
-
+    
     let regex = /(I'm|I\sam)(.*)/
     const found = msg.content.match(regex)
     if (found){
