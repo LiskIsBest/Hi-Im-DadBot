@@ -13,6 +13,7 @@ module.exports = {
           content: "Hi-Im-DadBot is not in a voice call.",
           ephemeral: true,
         })
+        return;
       }
 
       if (voiceChannel.id !== voiceConnection.joinConfig.channelId){
@@ -20,6 +21,7 @@ module.exports = {
           content: "You must be in the same voice call to use /dadleave.",
           ephemeral: true,
         })
+        return;
       }
       
       await interaction.reply({ content: `Leaving ${voiceChannel.name}` });

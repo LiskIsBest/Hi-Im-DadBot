@@ -13,11 +13,8 @@ module.exports = {
       });
       return
     }
-    await interaction.reply({
-      content: `Joining ${interaction.member?.voice.channel.name}`,
-    });
     const voiceChannel = interaction.member?.voice.channel;
-
+    
     const voiceConnection = joinVoiceChannel({
       channelId: voiceChannel.id,
       guildId: interaction.guildId,
@@ -25,5 +22,9 @@ module.exports = {
       selfDeaf: false,
       selfMute: false,
     });
+    await interaction.reply({
+      content: `Joining ${interaction.member?.voice.channel.name}`,
+    });
+    return;
   },
 };
