@@ -7,14 +7,14 @@ module.exports = {
     .setDescription("Hi-Im-dad-bot joins the voice call!"),
   async execute(interaction) {
     if (getVoiceConnection(interaction.guildId)) {
-      await interaction.reply({ 
+      await interaction.reply({
         content: "Hi-Im-DadBot is already in a call.",
         ephemeral: true,
       });
-      return
+      return;
     }
     const voiceChannel = interaction.member?.voice.channel;
-    
+
     const voiceConnection = joinVoiceChannel({
       channelId: voiceChannel.id,
       guildId: interaction.guildId,
