@@ -1,6 +1,11 @@
 const fs = require("node:fs");
 const path = require("node:path");
-const { Client, GatewayIntentBits, Collection } = require("discord.js");
+const {
+  Client,
+  GatewayIntentBits,
+  Collection,
+  Options,
+} = require("discord.js");
 const { addSpeechEvent } = require("discord-speech-recognition");
 require("dotenv").config();
 
@@ -12,8 +17,24 @@ const client = new Client({
     GatewayIntentBits.GuildMembers,
     GatewayIntentBits.GuildVoiceStates,
   ],
+  makeCache: Options.cacheWithLimits({
+    ...Options.DefaultMakeCacheSettings,
+    MessageManager: 80,
+    ReactionManager: 0,
+    GuildMemberManager: {
+      maxSize: 25,
+      keepOverLimit: (member) => member.id === client.user.id,
+    },
+  }),
+  sweepers: {
+    ...Options.DefaultSweeperSettings,
+    messages: {
+      interval: 21600, // Every 12 hours.
+      lifetime: 2700, // Remove messages older than 45 minutes.
+    },
+  },
 });
-addSpeechEvent(client)
+addSpeechEvent(client);
 
 client.commands = new Collection();
 
