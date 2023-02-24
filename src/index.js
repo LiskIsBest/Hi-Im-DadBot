@@ -1,8 +1,11 @@
 const fs = require("node:fs");
 const path = require("node:path");
+const { DataBaseConnection } = require("./database.js");
 const { Client, GatewayIntentBits, Collection, messageLink } = require("discord.js");
 const { addSpeechEvent } = require("discord-speech-recognition");
-require("dotenv").config(); // process.env.TOKEN
+require("dotenv").config();
+
+const DbConnection = new DataBaseConnection();
 
 const client = new Client({
   intents: [
@@ -48,7 +51,7 @@ for (const file of eventFiles) {
   if (event.once) {
     client.once(event.name, (...args) => event.execute(...args));
   } else {
-    client.on(event.name, (...args) => event.execute(...args));
+    client.on(event.name, (...args) => event.execute(...args, DbConnection));
   }
 }
 
