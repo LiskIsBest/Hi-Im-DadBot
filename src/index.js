@@ -36,7 +36,7 @@ for (const file of commandFiles) {
   }
 }
 
-// generate valid eventss from the eventss dir
+// generate valid events from the events dir
 const eventsPath = path.join(__dirname, "events");
 const eventFiles = fs
   .readdirSync(eventsPath)
