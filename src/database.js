@@ -1,4 +1,3 @@
-const { crypto_secretbox_easy } = require("libsodium-wrappers");
 const mysql = require("mysql2");
 require("dotenv").config();
 
