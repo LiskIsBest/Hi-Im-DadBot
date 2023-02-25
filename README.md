@@ -1,5 +1,7 @@
 # Hi-Im-DadBot
-Discord bot that replies with "Hi {text}, I'm dad" when it hears someone say "I'm"
+Discord bot that replies with "Hi {text}, I'm dad" when it hears someone say "I'm"\
+<br>
+Invite Hi-Im-DadBot to your server! [Invite link](https://discord.com/api/oauth2/authorize?client_id=1077956155625721857&permissions=274914675712&scope=bot%20applications.commands)
 
 ## Commands
 
