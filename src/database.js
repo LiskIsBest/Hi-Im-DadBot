@@ -1,3 +1,4 @@
+const { crypto_secretbox_easy } = require("libsodium-wrappers");
 const mysql = require("mysql2");
 require("dotenv").config();
 
@@ -85,8 +86,8 @@ function addToWhitelist(connection, guild_id, role_name, role_id) {
   });
 }
 
-function removeFromWhitelist(connection, guild_id, role_id){
-  return new Promise((resolve, reject)=>{
+function removeFromWhitelist(connection, guild_id, role_id) {
+  return new Promise((resolve, reject) => {
     connection.query(
       `DELETE FROM whitelisted_roles
        WHERE guild_id = ? AND role_id = ?`,
@@ -95,8 +96,8 @@ function removeFromWhitelist(connection, guild_id, role_id){
         if (error) console.error(error);
         return error ? reject(error) : resolve(results);
       }
-    )
-  })
+    );
+  });
 }
 
 function addToBlacklist(connection, guild_id, role_name, role_id) {
@@ -113,8 +114,8 @@ function addToBlacklist(connection, guild_id, role_name, role_id) {
   });
 }
 
-function removeFromBlacklist(connection, guild_id, role_id){
-  return new Promise((resolve, reject)=>{
+function removeFromBlacklist(connection, guild_id, role_id) {
+  return new Promise((resolve, reject) => {
     connection.query(
       `DELETE FROM blacklisted_roles
        WHERE guild_id = ? AND role_id = ?`,
@@ -123,8 +124,8 @@ function removeFromBlacklist(connection, guild_id, role_id){
         if (error) console.error(error);
         return error ? reject(error) : resolve(results);
       }
-    )
-  })
+    );
+  });
 }
 
 function existsInWhitelist(connection, guild_id, role_id) {
@@ -155,6 +156,20 @@ function existsInBlacklist(connection, guild_id, role_id) {
   });
 }
 
+function getListedRoles(connection, guild_id, list) {
+  return new Promise((resolve, reject) => {
+    connection.query(
+      `SELECT role_name, role_id
+       FROM ${list}listed_roles
+       WHERE guild_id = ?`,
+      [guild_id],
+      (error, results) => {
+        return error ? reject(error) : resolve(results);
+      }
+    );
+  });
+}
+
 module.exports = {
   createMysqlConnection,
   isInServersTable,
@@ -167,4 +182,5 @@ module.exports = {
   removeFromBlacklist,
   existsInBlacklist,
   existsInWhitelist,
+  getListedRoles,
 };
