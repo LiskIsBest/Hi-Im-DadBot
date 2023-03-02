@@ -8,6 +8,7 @@ const {
 } = require("discord.js");
 const { addSpeechEvent } = require("discord-speech-recognition");
 require("dotenv").config();
+require("events").EventEmitter.prototype._maxListeners = 100;
 
 const client = new Client({
   intents: [
