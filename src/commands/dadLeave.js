@@ -8,7 +8,8 @@ module.exports = {
     .setDescription("Hi-Im-dad-bot leaves the voice call!"),
   async execute(interaction) {
     const guild_id = interaction.guildId;
-    const member = interaction.member.roles.cache;
+    const member = interaction.member;
+    const channel = interaction.channel;
 
     const connection = createMysqlConnection();
     const whitelisted_roles = await getListedRoles(
@@ -23,14 +24,15 @@ module.exports = {
     );
 
     function permCheck(member) {
+      if(member.permissionsIn(channel).has("ADMINISTRATOR")) return true;
       var check = false;
       for (const role of whitelisted_roles) {
-        if (member.some((r) => r.id === role[1])) {
+        if (member.roles.cache.some((r) => r.id === role[1])) {
           check = true;
         }
       }
       for (const role of blacklisted_roles) {
-        if (member.some((r) => r.id === role[1])) {
+        if (member.roles.cache.some((r) => r.id === role[1])) {
           check = false;
         }
       }
