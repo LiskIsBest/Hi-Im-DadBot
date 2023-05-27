@@ -22,6 +22,7 @@ module.exports = {
       guild_id,
       "black"
     );
+    connection.end();
 
     function permCheck(member) {
       if(member.permissionsIn(channel).has("ADMINISTRATOR")) return true;
